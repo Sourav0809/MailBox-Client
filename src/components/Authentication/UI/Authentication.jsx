@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../Header/Header";
 import { BiSolidUserCircle } from "react-icons/bi";
 import axios from "axios";
-import { loginLink, signUpLink } from "../../../API/authPoints";
+import { loginLink, signUpLink, verifyUserLink } from "../../../API/authPoints";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthAction } from "../../../store/actions/authAction";
 const Authentication = () => {
   const [login, setLogin] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmpwd] = useState("");
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
 
   /* -------------------------------------------------------------------------- */
   /*                          SWICTH LOG IN OR SIGN UP                          */
@@ -26,14 +32,23 @@ const Authentication = () => {
       password: password,
     };
 
+
+
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                        IF USER CREATE A NEW ACCOUNT                        */
+    /* -------------------------------------------------------------------------- */
     if (!login) {
 
       // sign up logic
       if (password.trim() === confirmPwd.trim() && password.trim() !== "") {
         try {
           const { data } = await axios.post(signUpLink, submitedData);
-          localStorage.setItem("idToken", data.idToken);
+
+          dispatch(setAuthAction(data.idToken))
           toast.success(" Account Created ! ");
+          navigate('/dashboard')
 
         } catch (error) {
           toast.error(error.response.data.error.message);
@@ -41,15 +56,20 @@ const Authentication = () => {
       } else {
         alert("Password & Confirm Password should match and cannot be blank.");
       }
-    } else {
-      // Login logic
+    }
 
+    /* -------------------------------------------------------------------------- */
+    /*                               IF USER LOG IN                               */
+    /* -------------------------------------------------------------------------- */
+
+    else {
       if (email.trim() !== "" && password.trim() !== "") {
 
         try {
           const { data } = await axios.post(loginLink, submitedData);
-          localStorage.setItem("idToken", data.idToken);
+          dispatch(setAuthAction(data.idToken))
           toast.success("Log in Successfully");
+          navigate('/dashboard')
 
         } catch (error) {
           toast.error(error.response.data.error.message);
