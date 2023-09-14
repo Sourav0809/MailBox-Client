@@ -12,9 +12,8 @@ const Authentication = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmpwd] = useState("");
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   /* -------------------------------------------------------------------------- */
   /*                          SWICTH LOG IN OR SIGN UP                          */
@@ -32,45 +31,34 @@ const Authentication = () => {
       password: password,
     };
 
-
-
-
-
     /* -------------------------------------------------------------------------- */
     /*                        IF USER CREATE A NEW ACCOUNT                        */
     /* -------------------------------------------------------------------------- */
     if (!login) {
-
       // sign up logic
       if (password.trim() === confirmPwd.trim() && password.trim() !== "") {
         try {
           const { data } = await axios.post(signUpLink, submitedData);
 
-          dispatch(setAuthAction(data.idToken))
+          dispatch(setAuthAction(data.idToken));
           toast.success(" Account Created ! ");
-          navigate('/dashboard')
-
+          navigate("/inbox");
         } catch (error) {
           toast.error(error.response.data.error.message);
         }
       } else {
         alert("Password & Confirm Password should match and cannot be blank.");
       }
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /*                               IF USER LOG IN                               */
-    /* -------------------------------------------------------------------------- */
-
-    else {
+    } else {
+      /* -------------------------------------------------------------------------- */
+      /*                               IF USER LOG IN                               */
+      /* -------------------------------------------------------------------------- */
       if (email.trim() !== "" && password.trim() !== "") {
-
         try {
           const { data } = await axios.post(loginLink, submitedData);
-          dispatch(setAuthAction(data.idToken))
+          dispatch(setAuthAction(data.idToken));
           toast.success("Log in Successfully");
-          navigate('/dashboard')
-
+          navigate("/inbox");
         } catch (error) {
           toast.error(error.response.data.error.message);
         }
@@ -84,7 +72,7 @@ const Authentication = () => {
     <div>
       <Header />
       <div className=" w-[90%] md:w-[50rem] mt-[8rem] m-auto">
-        <div className="shadow-md mt-5 p-6 border">
+        <div className="  shadow-md  shadow-gray-400 mt-5 p-6 border border-gray-400">
           <div className=" mt-5 flex justify-center item-center">
             <BiSolidUserCircle className=" text-9xl text-blue-500 " />
           </div>
@@ -92,7 +80,7 @@ const Authentication = () => {
             <input
               type="email"
               placeholder="Email "
-              className=" w-full p-2 pl-5 bg-gray-200 "
+              className=" w-full p-2 pl-5 bg-[#e0e0e0]  "
               required
               value={email}
               onChange={(e) => {
@@ -102,7 +90,7 @@ const Authentication = () => {
             <input
               type="password"
               placeholder="Password"
-              className=" w-full p-2 pl-5 bg-gray-200 "
+              className=" w-full p-2 pl-5 bg-[#e0e0e0]  "
               required
               value={password}
               onChange={(e) => {
@@ -113,7 +101,7 @@ const Authentication = () => {
               <input
                 type="password"
                 placeholder="Confirm Password"
-                className=" w-full p-2 pl-5 bg-gray-200 "
+                className=" w-full p-2 pl-5 bg-[#e0e0e0] "
                 required
                 value={confirmPwd}
                 onChange={(e) => {

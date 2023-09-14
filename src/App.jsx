@@ -1,42 +1,39 @@
 import "./App.css";
-import { verifyUserLink } from "./API/authPoints";
-import axios from "axios";
+
 import { useEffect } from "react";
-import { setAuthAction } from "./store/actions/authAction";
+import { validateUserAction } from "./store/actions/authAction";
 import MyRoutes from "./Routes/MyRoutes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import PageLoader from "./components/UI/PageLoader";
+import SideBar from "./components/SideBar/UI/SideBar";
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { loader, isAuthenticated } = useSelector((state) => state.auth);
 
   /* -------------------------------------------------------------------------- */
   /*                          IF USER REFRESH THE PAGE                          */
   /* -------------------------------------------------------------------------- */
-  const idToken = localStorage.getItem('idToken')
+
   useEffect(() => {
-    const validateUser = async (idToken) => {
-
-      try {
-        if (idToken) {
-          const { data } = await axios.post(verifyUserLink, { idToken: idToken })
-          dispatch(setAuthAction(idToken))
-
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-
-    validateUser(idToken)
-  }, [])
-
-
-
-
+    dispatch(validateUserAction());
+  }, []);
 
   return (
     <>
-      <MyRoutes />
+      {loader ? (
+        <PageLoader />
+      ) : (
+        <>
+          {isAuthenticated ? (
+            <>
+              <SideBar />
+              <MyRoutes />
+            </>
+          ) : (
+            <MyRoutes />
+          )}
+        </>
+      )}
     </>
   );
 }

@@ -1,9 +1,6 @@
-
-import Authentication from '../components/Authentication/UI/Authentication'
+import Authentication from "../components/Authentication/UI/Authentication";
 const AuthPage = () => {
-    return (
-        <Authentication />
-    )
-}
+  return <Authentication />;
+};
 
-export default AuthPage
+export default AuthPage;
