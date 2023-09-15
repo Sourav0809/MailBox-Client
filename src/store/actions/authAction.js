@@ -15,7 +15,8 @@ export const validateUserAction = () => {
         try {
             if (idToken) {
                 const { data } = await axios.post(verifyUserLink, { idToken: idToken })
-                dispatch(setAuthAction(idToken))
+
+                dispatch(setAuthAction({ idToken: idToken, email: data.users[0].email }))
             }
         } catch (error) {
             toast.error('User Validation Failed')

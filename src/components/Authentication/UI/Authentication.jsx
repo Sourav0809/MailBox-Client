@@ -40,9 +40,11 @@ const Authentication = () => {
         try {
           const { data } = await axios.post(signUpLink, submitedData);
 
-          dispatch(setAuthAction(data.idToken));
+          dispatch(
+            setAuthAction({ idToken: data.idToken, email: submitedData.email })
+          );
           toast.success(" Account Created ! ");
-          navigate("/inbox");
+          navigate("/userprofile");
         } catch (error) {
           toast.error(error.response.data.error.message);
         }
@@ -56,9 +58,11 @@ const Authentication = () => {
       if (email.trim() !== "" && password.trim() !== "") {
         try {
           const { data } = await axios.post(loginLink, submitedData);
-          dispatch(setAuthAction(data.idToken));
+          dispatch(
+            setAuthAction({ idToken: data.idToken, email: submitedData.email })
+          );
           toast.success("Log in Successfully");
-          navigate("/inbox");
+          navigate("/userprofile");
         } catch (error) {
           toast.error(error.response.data.error.message);
         }
