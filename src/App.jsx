@@ -8,8 +8,8 @@ import PageLoader from "./components/UI/PageLoader";
 import SideBar from "./components/SideBar/UI/SideBar";
 function App() {
   const dispatch = useDispatch();
-  const { loader, isAuthenticated } = useSelector((state) => state.auth);
-
+  const { loader } = useSelector((state) => state.auth);
+  const { userDetails } = useSelector((state) => state.userDetails);
   /* -------------------------------------------------------------------------- */
   /*                          IF USER REFRESH THE PAGE                          */
   /* -------------------------------------------------------------------------- */
@@ -24,7 +24,7 @@ function App() {
         <PageLoader />
       ) : (
         <>
-          {isAuthenticated ? (
+          {userDetails ? (
             <>
               <SideBar />
               <MyRoutes />

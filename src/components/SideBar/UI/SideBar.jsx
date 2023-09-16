@@ -75,12 +75,14 @@ const SideBar = () => {
         </div>
 
         <div className=" mb-14 flex flex-col gap-1">
-          <div className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer">
-            <div className=" flex justify-center items-center gap-4 m-1">
-              <BiSolidUserCircle className="text-2xl" />
-              <p className=" text-lg leading-loose">Your Profile</p>
+          <NavLink to={"/profile"}>
+            <div className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer">
+              <div className=" flex justify-center items-center gap-4 m-1">
+                <BiSolidUserCircle className="text-2xl" />
+                <p className=" text-lg leading-loose">Your Profile</p>
+              </div>
             </div>
-          </div>
+          </NavLink>
 
           <div
             className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer"

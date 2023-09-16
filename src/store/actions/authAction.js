@@ -2,10 +2,18 @@ import { hideLoader, setAuthenticated, userLogOut } from "../reducers/authSlice"
 import axios from "axios";
 import { verifyUserLink } from "../../API/authPoints";
 import toast from "react-hot-toast";
-
+import { removeUserDetails } from "../reducers/userProfileSlice";
 
 export const setAuthAction = setAuthenticated
-export const userLogOutAction = userLogOut
+
+
+//WHEN USER LOG OUT 
+export const userLogOutAction = () => {
+    return (dispatch, getState) => {
+        dispatch(userLogOut())
+        dispatch(removeUserDetails())
+    }
+}
 
 
 export const validateUserAction = () => {
@@ -19,7 +27,7 @@ export const validateUserAction = () => {
                 dispatch(setAuthAction({ idToken: idToken, email: data.users[0].email }))
             }
         } catch (error) {
-            toast.error('User Validation Failed')
+            toast.error('User Validation Failed ! Log in Again')
         }
         dispatch(hideLoader())
 
