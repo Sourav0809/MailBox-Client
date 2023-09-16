@@ -7,6 +7,7 @@ import { postLink } from "../../../API/postLink";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { BiLoaderCircle } from "react-icons/bi";
+
 const Compose = () => {
   const [loader, setLoader] = useState(false);
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ const Compose = () => {
   /*                            WHEN USER SEND EMAIL                            */
   /* -------------------------------------------------------------------------- */
 
-  const onSubmitHandeler = async (e) => {
+  const onSubmitHandeler = (e) => {
     setLoader(true);
 
     e.preventDefault();
@@ -33,27 +34,31 @@ const Compose = () => {
         typedText: typedContent,
         htmlFormat: content,
       };
-      try {
-        // storing into firebase as inbox under receipents email
-        const res = await axios.post(
-          `${postLink}/${formatEmail(submitedVal.email)}/inbox.json`,
-          submitedVal
-        );
 
-        // storing into firebase as sent under sender email
-        const { data } = await axios.post(
-          `${postLink}/${formatEmail(senderEmail)}/sent.json`,
-          submitedVal
-        );
+      // Create an array of promises for the two API calls
+      const inboxPromise = axios.post(
+        `${postLink}/${formatEmail(submitedVal.email)}/inbox.json`,
+        submitedVal
+      );
+      const sentPromise = axios.post(
+        `${postLink}/${formatEmail(senderEmail)}/sent.json`,
+        submitedVal
+      );
 
-        // making input field blank
-        toast.success("Email Sent");
-        setEmail("");
-        setSubject("");
-        setContent("");
-      } catch (error) {
-        toast.error("Error While Sending Email");
-      }
+      Promise.all([inboxPromise, sentPromise])
+        .then(([inboxResponse, sentResponse]) => {
+          console.log(inboxResponse);
+          console.log(sentResponse);
+        })
+        .catch((error) => {
+          toast.error("Error While Sending Email");
+        });
+
+      // making input field blank
+      toast.success("Email Sent");
+      setEmail("");
+      setSubject("");
+      setContent("");
     } else {
       alert("Message Field cannot be blank");
     }

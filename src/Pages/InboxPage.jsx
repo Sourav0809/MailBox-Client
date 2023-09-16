@@ -1,6 +1,6 @@
-import Inbox from "../components/Inbox/UI/Inbox";
+import InboxContainer from "../components/Inbox/InboxContainer";
 const InboxPage = () => {
-  return <Inbox />;
+  return <InboxContainer />;
 };
 
 export default InboxPage;

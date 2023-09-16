@@ -6,11 +6,12 @@ import { AiFillStar } from "react-icons/ai";
 import { BsFillSendFill, BsFillTrashFill } from "react-icons/bs";
 import { userLogOutAction } from "../../../store/actions/authAction";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
 const SideBar = () => {
   const dispatch = useDispatch();
+  const { receiveEmails } = useSelector((state) => state.allEmails);
   /* -------------------------------------------------------------------------- */
   /*                          IF USER CLICK ON LOG OUT                          */
   /* -------------------------------------------------------------------------- */
@@ -23,9 +24,9 @@ const SideBar = () => {
   return (
     <div>
       <div className=" fixed top-0 left-0 w-[13rem] h-screen bg-[rgb(15,15,20)] font-popins flex flex-col justify-between">
-        <div>
-          <NavLink to={"/compose"}>
-            <div className=" m-3 flex justify-center items-center mt-10 text-white cursor-pointer gap-3 bg-[rgb(47,47,61)] p-2">
+        <div className="mt-10 m-3">
+          <NavLink to={"/compose"} className="border-none">
+            <div className=" flex justify-center items-center text-white cursor-pointer gap-3 bg-[rgb(47,47,61)] p-2">
               <TiPencil className=" text-xl" />
               <h3 className=" text-base">Compose</h3>
             </div>
@@ -33,13 +34,13 @@ const SideBar = () => {
 
           <div className=" flex flex-col mt-5 gap-3">
             <NavLink to={"/inbox"}>
-              <div className=" flex justify-between items-center text-white gap-2 px-5 border-l cursor-pointer">
+              <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
                 <div className=" flex justify-center items-center gap-4 m-1">
                   <BiSolidInbox className="text-2xl" />
                   <p className=" text-lg leading-loose">Inbox</p>
                 </div>
                 <div className=" bg-blue-700 px-4 text-base">
-                  <h1>10</h1>
+                  <h1>{receiveEmails.length}</h1>
                 </div>
               </div>
             </NavLink>
@@ -57,13 +58,14 @@ const SideBar = () => {
                 <p className=" text-lg leading-loose">Starred</p>
               </div>
             </div>
-
-            <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
-              <div className=" flex justify-center items-center gap-5 m-1">
-                <BsFillSendFill className="text-xl" />
-                <p className=" text-lg leading-loose">Sent</p>
+            <NavLink to={"/sent"}>
+              <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
+                <div className=" flex justify-center items-center gap-5 m-1">
+                  <BsFillSendFill className="text-xl" />
+                  <p className=" text-lg leading-loose">Sent</p>
+                </div>
               </div>
-            </div>
+            </NavLink>
 
             <div className=" flex justify-start items-center text-white gap-2 px-5  cursor-pointer">
               <div className=" flex justify-center items-center gap-4 m-1">
