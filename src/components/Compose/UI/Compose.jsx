@@ -2,31 +2,62 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useRef, useState } from "react";
 import formatEmail from "../../../functions/formatEmail";
+import { useSelector } from "react-redux";
+import { postLink } from "../../../API/postLink";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { BiLoaderCircle } from "react-icons/bi";
 const Compose = () => {
+  const [loader, setLoader] = useState(false);
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const typedVal = useRef(null);
+  const senderEmail = useSelector((state) => state.auth.email);
 
   /* -------------------------------------------------------------------------- */
   /*                            WHEN USER SEND EMAIL                            */
   /* -------------------------------------------------------------------------- */
+
   const onSubmitHandeler = async (e) => {
+    setLoader(true);
+
     e.preventDefault();
     const editor = typedVal.current.editor;
     const typedContent = editor.getText().trim();
     if (content) {
       const submitedVal = {
         email: email,
+        senderEmail: senderEmail,
         subject: subject,
         typedText: typedContent,
         htmlFormat: content,
       };
+      try {
+        // storing into firebase as inbox under receipents email
+        const res = await axios.post(
+          `${postLink}/${formatEmail(submitedVal.email)}/inbox.json`,
+          submitedVal
+        );
 
-      console.log(submitedVal);
+        // storing into firebase as sent under sender email
+        const { data } = await axios.post(
+          `${postLink}/${formatEmail(senderEmail)}/sent.json`,
+          submitedVal
+        );
+
+        // making input field blank
+        toast.success("Email Sent");
+        setEmail("");
+        setSubject("");
+        setContent("");
+      } catch (error) {
+        toast.error("Error While Sending Email");
+      }
     } else {
       alert("Message Field cannot be blank");
     }
+    setLoader(false);
   };
 
   return (
@@ -49,6 +80,7 @@ const Compose = () => {
               type="text"
               required
               placeholder="Subject"
+              value={subject}
               className="p-[.4rem] mx-3 border-b border-gray-500 focus:outline-0"
               onChange={(e) => {
                 setSubject(e.target.value);
@@ -67,9 +99,9 @@ const Compose = () => {
             <div className="px-3">
               <button
                 type="submit"
-                className=" bg-blue-500 text-white font-semibold p-2 w-[30%] rounded-md"
+                className=" bg-blue-500 flex justify-center items-center text-white font-semibold p-2 w-[20%] rounded-md"
               >
-                Send
+                {loader ? <BiLoaderCircle className=" text-2xl" /> : "Sent"}
               </button>
             </div>
           </div>

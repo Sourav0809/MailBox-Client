@@ -15,7 +15,6 @@ const ProfileView = () => {
   /*                     IF USERS WANT TO VERIFY THEIR EMAIL                    */
   /* -------------------------------------------------------------------------- */
 
-  console.log(userDetails);
   const verifyEmailHandeler = async () => {
     try {
       const { data } = await axios.post(verifyEmailLink, {
@@ -26,6 +25,9 @@ const ProfileView = () => {
       toast.error("Error Occurred !");
     }
   };
+
+  // helper to check user verified or not
+  const verifiedUser = userDetails.emailVerified;
 
   return (
     <div className=" pl-[13em]">
@@ -73,14 +75,17 @@ const ProfileView = () => {
           />
           <div className=" flex justify-center item-center gap-2">
             <button
+              disabled={verifiedUser}
               onClick={verifyEmailHandeler}
               className="mt-3 py-2 bg-[#4045c7d0] md:w-[100%] w-full font-semibold text-white rounded-sm"
             >
-              Verfiy Email
+              {verifiedUser ? "Verified User " : "Verfiy Email"}
             </button>
             <button
-              disabled
-              className="mt-3 py-2 bg-[#777bd8d0] md:w-[100%] w-full font-semibold text-white rounded-sm"
+              disabled={!verifiedUser}
+              className={`mt-3 py-2 ${
+                verifiedUser ? "bg-[#4045c7d0]" : "bg-[#777bd8d0]"
+              }  md:w-[100%] w-full font-semibold text-white rounded-sm`}
             >
               Edit Profile
             </button>
@@ -88,7 +93,9 @@ const ProfileView = () => {
 
           <div className={` mt-2 mb-4 text-black`}>
             <h1 className=" text-base font-semibold">
-              Verify Your Email To Use 100% Features
+              {verifiedUser
+                ? "Thanks For Being Verified User"
+                : "Verify Your Email To Use 100% Features"}
             </h1>
           </div>
         </div>
