@@ -1,14 +1,7 @@
-import { useEffect } from "react";
-import { fetchInboxAction } from "../../store/actions/emailAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Inbox from "./UI/Inbox";
 const InboxContainer = () => {
-  const dispatch = useDispatch();
   const { receiveEmails } = useSelector((state) => state.allEmails);
-
-  useEffect(() => {
-    dispatch(fetchInboxAction());
-  }, []);
 
   return (
     <div className=" pl-[13rem]">

@@ -2,11 +2,12 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useRef, useState } from "react";
 import formatEmail from "../../../functions/formatEmail";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postLink } from "../../../API/postLink";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { BiLoaderCircle } from "react-icons/bi";
+import { storeEmailAction } from "../../../store/actions/emailAction";
 
 const Compose = () => {
   const [loader, setLoader] = useState(false);
@@ -15,6 +16,7 @@ const Compose = () => {
   const [content, setContent] = useState("");
   const typedVal = useRef(null);
   const senderEmail = useSelector((state) => state.auth.email);
+  const dispatch = useDispatch();
 
   /* -------------------------------------------------------------------------- */
   /*                            WHEN USER SEND EMAIL                            */
@@ -34,28 +36,8 @@ const Compose = () => {
         typedText: typedContent,
         htmlFormat: content,
       };
+      dispatch(storeEmailAction(submitedVal.email, senderEmail, submitedVal));
 
-      // Create an array of promises for the two API calls
-      const inboxPromise = axios.post(
-        `${postLink}/${formatEmail(submitedVal.email)}/inbox.json`,
-        submitedVal
-      );
-      const sentPromise = axios.post(
-        `${postLink}/${formatEmail(senderEmail)}/sent.json`,
-        submitedVal
-      );
-
-      Promise.all([inboxPromise, sentPromise])
-        .then(([inboxResponse, sentResponse]) => {
-          console.log(inboxResponse);
-          console.log(sentResponse);
-        })
-        .catch((error) => {
-          toast.error("Error While Sending Email");
-        });
-
-      // making input field blank
-      toast.success("Email Sent");
       setEmail("");
       setSubject("");
       setContent("");

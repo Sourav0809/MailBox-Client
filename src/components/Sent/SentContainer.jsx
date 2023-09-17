@@ -1,15 +1,7 @@
-import { useEffect } from "react";
-import { fetchSentAction } from "../../store/actions/emailAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Sent from "./UI/Sent";
 const SentContainer = () => {
-  const dispatch = useDispatch();
   const { sentEmails } = useSelector((state) => state.allEmails);
-  console.log(sentEmails);
-
-  useEffect(() => {
-    dispatch(fetchSentAction());
-  }, []);
 
   return (
     <div className=" pl-[13rem]">
