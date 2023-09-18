@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { BiStar } from "react-icons/bi";
 const InboxDetailPage = () => {
   const { receiveEmails } = useSelector((state) => state.allEmails);
-  console.log(receiveEmails);
   const { id } = useParams();
   const filteredEmail = receiveEmails.filter((emails) => {
     return emails.id === id;

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userProfileSlice = createSlice({
     name: 'userProfile',
-    initialState: { userDetails: "", loader: true },
+    initialState: { userDetails: "", },
     reducers: {
         setUserDetails(state, action) {
             state.userDetails = action.payload
@@ -11,9 +11,7 @@ const userProfileSlice = createSlice({
         removeUserDetails(state) {
             state.userDetails = ""
         },
-        hideLoader(state) {
-            state.loader = false
-        }
+
 
     }
 
@@ -22,4 +20,4 @@ const userProfileSlice = createSlice({
 
 
 export default userProfileSlice.reducer
-export const { setUserDetails, removeUserDetails, hideLoader } = userProfileSlice.actions 
+export const { setUserDetails, removeUserDetails } = userProfileSlice.actions 

@@ -1,8 +1,9 @@
 import { getDataLink } from "../../API/getDataLink"
 import axios from "axios"
 import formatEmail from "../../functions/formatEmail"
-import { hideLoader, setUserDetails } from "../reducers/userProfileSlice"
+import { setUserDetails } from "../reducers/userProfileSlice"
 import { getAccDetailsLink } from "../../API/getDataLink"
+import toast from "react-hot-toast"
 export const userDetailsSetAction = () => {
     return async (dispatch, getState) => {
         const { email, idToken } = getState().auth
@@ -29,8 +30,8 @@ export const userDetailsSetAction = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            toast.error("An Error Occurred");
         }
-        dispatch(hideLoader())
+
     }
 }

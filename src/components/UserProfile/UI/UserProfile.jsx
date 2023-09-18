@@ -12,11 +12,14 @@ const UserProfile = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const { email } = useSelector((state) => state.auth);
-  const { loader } = useSelector((state) => state.userDetails);
+  const [loader, setLoader] = useState(true);
+  console.log(loader);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userDetailsSetAction());
+    dispatch(userDetailsSetAction()).then(() => {
+      setLoader(false);
+    });
   }, []);
 
   // IF USER PRESS CONTINUE AFTER PUT ALL THE DETAILS
