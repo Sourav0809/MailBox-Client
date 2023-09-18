@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 export const fetchInboxAction = () => {
     return async (dispatch, getState) => {
         const { email } = getState().auth
+        console.log('Hi')
         try {
             const { data } = await axios.get(`${getDataLink}/${formatEmail(email)}/inbox.json`)
             if (data) {
@@ -20,7 +21,7 @@ export const fetchInboxAction = () => {
                         ...data[id],
                     }
                 });
-
+                console.log('Hello ')
                 dispatch(setReceiveEmails(newObjArr.reverse()))
 
             }
@@ -81,15 +82,12 @@ export const storeEmailAction = (receiverEmail, senderEmail, submitedVal) => {
 
         Promise.all([inboxPromise, sentPromise])
             .then(([inboxResponse, sentResponse]) => {
-                if (inboxResponse.data) {
-                    const newEmail = { id: inboxResponse.data.name, ...submitedVal }
-                    const OldEmails = getState().allEmails.receiveEmails
-                    dispatch(setReceiveEmails([newEmail, ...OldEmails]))
-                }
-                if (sentResponse.data) {
+                if (inboxResponse.data && sentResponse.data) {
                     const newSentEmail = { id: inboxResponse.data.name, ...submitedVal }
                     const OldSentEmails = getState().allEmails.sentEmails
-                    dispatch(setSentEmails([newSentEmail, ...OldSentEmails]))
+                    dispatch(setSentEmails([...OldSentEmails, newSentEmail,]))
+
+                    toast.success('Email Sent ')
                 }
 
             })

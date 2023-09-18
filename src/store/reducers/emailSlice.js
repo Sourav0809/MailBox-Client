@@ -10,10 +10,15 @@ const emailSlice = createSlice({
 
         setReceiveEmails(state, action) {
             state.receiveEmails = action.payload
+        },
+        clearEmails(state) {
+            state.receiveEmails = []
+            state.sentEmails = []
         }
+
     }
 })
 
 
 export default emailSlice.reducer;
-export const { setSentEmails, setReceiveEmails } = emailSlice.actions
+export const { setSentEmails, setReceiveEmails, clearEmails } = emailSlice.actions

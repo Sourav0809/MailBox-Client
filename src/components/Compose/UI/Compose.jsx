@@ -1,22 +1,42 @@
+import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useRef, useState } from "react";
-import formatEmail from "../../../functions/formatEmail";
+import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postLink } from "../../../API/postLink";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { BiLoaderCircle } from "react-icons/bi";
 import { storeEmailAction } from "../../../store/actions/emailAction";
-
+import regeneratorRuntime from "regenerator-runtime";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 const Compose = () => {
   const [loader, setLoader] = useState(false);
+  const [content, setContent] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
-  const [content, setContent] = useState("");
   const typedVal = useRef(null);
   const senderEmail = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
+  const { transcript, browserSupportsSpeechRecognition, resetTranscript } =
+    useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return null;
+  }
+  const onStartListening = () => {
+    SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
+  };
+  const onStopListening = () => {
+    SpeechRecognition.stopListening();
+    resetTranscript();
+  };
+
+  useEffect(() => {
+    // Set the currentTranscript state to the transcript whenever a new transcript is available.
+    if (transcript) {
+      setContent(transcript);
+    }
+  }, [transcript]);
 
   /* -------------------------------------------------------------------------- */
   /*                            WHEN USER SEND EMAIL                            */
@@ -83,12 +103,24 @@ const Compose = () => {
                 ref={typedVal}
               />
             </div>
-            <div className="px-3">
+            <div className="px-3 flex items-center gap-2">
               <button
                 type="submit"
-                className=" bg-blue-500 flex justify-center items-center text-white font-semibold p-2 w-[20%] rounded-md"
+                className=" bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
               >
                 {loader ? <BiLoaderCircle className=" text-2xl" /> : "Sent"}
+              </button>
+              <button
+                onClick={onStartListening}
+                className=" bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
+              >
+                Start Speech To Text{" "}
+              </button>
+              <button
+                onClick={onStopListening}
+                className="bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
+              >
+                Stop Speech To Text
               </button>
             </div>
           </div>

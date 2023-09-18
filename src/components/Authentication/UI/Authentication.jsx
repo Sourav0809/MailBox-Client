@@ -7,6 +7,10 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuthAction } from "../../../store/actions/authAction";
+import {
+  fetchInboxAction,
+  fetchSentAction,
+} from "../../../store/actions/emailAction";
 const Authentication = () => {
   const [login, setLogin] = useState(false);
   const [email, setEmail] = useState("");
@@ -63,6 +67,8 @@ const Authentication = () => {
           dispatch(
             setAuthAction({ idToken: data.idToken, email: submitedData.email })
           );
+          dispatch(fetchInboxAction());
+          dispatch(fetchSentAction());
           toast.success("Log in Successfully");
           navigate("/userprofile");
         } catch (error) {

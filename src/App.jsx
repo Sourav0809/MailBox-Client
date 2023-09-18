@@ -17,9 +17,7 @@ function App() {
   /* -------------------------------------------------------------------------- */
 
   useEffect(() => {
-    dispatch(validateUserAction()).then(() => {
-      Promise.all([dispatch(fetchInboxAction()), dispatch(fetchSentAction())]);
-    });
+    dispatch(validateUserAction());
   }, []);
 
   return (
