@@ -8,6 +8,7 @@ import UserProfilePage from "../Pages/UserProfilePage";
 import ProfileViewPage from "../Pages/ProfileViewPage";
 import SentBoxPage from "../Pages/SentBoxPage";
 import InboxDetailPage from "../Pages/InboxDetailPage";
+import SentBoxDetailPage from "../Pages/sentBoxDetailPage";
 const MyRoutes = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { userDetails } = useSelector((state) => state.userDetails);
@@ -25,6 +26,10 @@ const MyRoutes = () => {
                 element={<InboxDetailPage />}
               />
               <Route path="/sent" element={<SentBoxPage />} />
+              <Route
+                path="/sentBoxEmailDetails/:id"
+                element={<SentBoxDetailPage />}
+              />
               <Route path="/compose" element={<ComposePage />} />
               <Route path="/profile" element={<ProfileViewPage />} />
               <Route path="*" element={<InboxPage />} />

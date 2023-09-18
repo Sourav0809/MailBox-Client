@@ -119,3 +119,24 @@ export const deleteReceiveEmail = (id) => {
         }
     }
 }
+
+
+
+export const deleteSentEmail = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            if (id) {
+                const { email } = getState().auth
+                const { sentEmails } = getState().allEmails
+                const res = await axios.delete(`${postLink}/${formatEmail(email)}/sent/${id}.json`)
+                const filteredEmails = sentEmails.filter((email) => {
+                    return email.id !== id
+                })
+                dispatch(setSentEmails(filteredEmails))
+                toast.success('Email Deleted')
+            }
+        } catch (error) {
+            toast.error('Error While Deleting Email ')
+        }
+    }
+}
