@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiSolidInbox, BiSolidUserCircle, BiSolidLogOut } from "react-icons/bi";
 import { RiDraftFill } from "react-icons/ri";
 import { TiPencil } from "react-icons/ti";
@@ -8,10 +8,12 @@ import { userLogOutAction } from "../../../store/actions/authAction";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-
+import { GiHamburgerMenu } from "react-icons/gi";
+import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 const SideBar = () => {
   const dispatch = useDispatch();
   const { receiveEmails } = useSelector((state) => state.allEmails);
+  const [display, setDisplay] = useState("none");
   /* -------------------------------------------------------------------------- */
   /*                          IF USER CLICK ON LOG OUT                          */
   /* -------------------------------------------------------------------------- */
@@ -23,76 +25,100 @@ const SideBar = () => {
 
   return (
     <div>
-      <div className=" fixed top-0 left-0 w-[13rem] h-screen bg-[rgb(15,15,20)] font-popins flex flex-col justify-between">
-        <div className="mt-10 m-3">
-          <NavLink to={"/compose"} className="border-none">
-            <div className=" flex justify-center items-center text-white cursor-pointer gap-3 bg-[rgb(47,47,61)] p-2">
-              <TiPencil className=" text-xl" />
-              <h3 className=" text-base">Compose</h3>
-            </div>
-          </NavLink>
+      <div className="md:[display:none]">
+        {display == "none" ? (
+          <div className="">
+            <GiHamburgerMenu
+              className="text-5xl fixed top-5 left-[4rem] z-20"
+              onClick={() => {
+                setDisplay("flex");
+              }}
+            />
+          </div>
+        ) : (
+          <div className="">
+            <BsFillArrowLeftCircleFill
+              className="text-5xl fixed top-5 left-[14rem] z-20"
+              onClick={() => {
+                setDisplay("none");
+              }}
+            />
+          </div>
+        )}
+      </div>
 
-          <div className=" flex flex-col mt-5 gap-3">
-            <NavLink to={"/inbox"}>
+      <div className={` [display:${display}] md:[display:flex]`}>
+        <div className=" fixed top-0 left-0 z-50 w-[13rem] h-screen bg-[rgb(15,15,20)] font-popins flex flex-col justify-between">
+          <div className="mt-10 m-3">
+            <NavLink to={"/compose"} className="border-none">
+              <div className=" flex justify-center items-center text-white cursor-pointer gap-3 bg-[rgb(47,47,61)] p-2">
+                <TiPencil className=" text-xl" />
+                <h3 className=" text-base">Compose</h3>
+              </div>
+            </NavLink>
+
+            <div className=" flex flex-col mt-5 gap-3">
+              <NavLink to={"/inbox"}>
+                <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
+                  <div className=" flex justify-center items-center gap-4 m-1">
+                    <BiSolidInbox className="text-2xl" />
+                    <p className=" text-lg leading-loose">Inbox</p>
+                  </div>
+                  <div className=" bg-blue-700 px-4 text-base">
+                    <h1>{receiveEmails.length}</h1>
+                  </div>
+                </div>
+              </NavLink>
+
               <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
                 <div className=" flex justify-center items-center gap-4 m-1">
-                  <BiSolidInbox className="text-2xl" />
-                  <p className=" text-lg leading-loose">Inbox</p>
-                </div>
-                <div className=" bg-blue-700 px-4 text-base">
-                  <h1>{receiveEmails.length}</h1>
+                  <RiDraftFill className="text-2xl" />
+                  <p className=" text-lg leading-loose">Draft</p>
                 </div>
               </div>
-            </NavLink>
 
-            <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
-              <div className=" flex justify-center items-center gap-4 m-1">
-                <RiDraftFill className="text-2xl" />
-                <p className=" text-lg leading-loose">Draft</p>
-              </div>
-            </div>
-
-            <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
-              <div className=" flex justify-center items-center gap-4 m-1">
-                <AiFillStar className="text-2xl" />
-                <p className=" text-lg leading-loose">Starred</p>
-              </div>
-            </div>
-            <NavLink to={"/sent"}>
               <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
-                <div className=" flex justify-center items-center gap-5 m-1">
-                  <BsFillSendFill className="text-xl" />
-                  <p className=" text-lg leading-loose">Sent</p>
+                <div className=" flex justify-center items-center gap-4 m-1">
+                  <AiFillStar className="text-2xl" />
+                  <p className=" text-lg leading-loose">Starred</p>
                 </div>
               </div>
-            </NavLink>
+              <NavLink to={"/sent"}>
+                <div className=" flex justify-between items-center text-white gap-2 px-5  cursor-pointer">
+                  <div className=" flex justify-center items-center gap-5 m-1">
+                    <BsFillSendFill className="text-xl" />
+                    <p className=" text-lg leading-loose">Sent</p>
+                  </div>
+                </div>
+              </NavLink>
 
-            <div className=" flex justify-start items-center text-white gap-2 px-5  cursor-pointer">
-              <div className=" flex justify-center items-center gap-4 m-1">
-                <BsFillTrashFill className="text-2xl" />
-                <p className=" text-lg leading-loose">Trash</p>
+              <div className=" flex justify-start items-center text-white gap-2 px-5  cursor-pointer">
+                <div className=" flex justify-center items-center gap-4 m-1">
+                  <BsFillTrashFill className="text-2xl" />
+                  <p className=" text-lg leading-loose">Trash</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className=" mb-14 flex flex-col gap-1">
-          <NavLink to={"/profile"}>
-            <div className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer">
-              <div className=" flex justify-center items-center gap-4 m-1">
-                <BiSolidUserCircle className="text-2xl" />
-                <p className=" text-lg leading-loose">Your Profile</p>
+          <div className=" mb-14 flex flex-col gap-1">
+            <NavLink to={"/profile"}>
+              <div className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer">
+                <div className=" flex justify-center items-center gap-4 m-1">
+                  <BiSolidUserCircle className="text-2xl" />
+                  <p className=" text-lg leading-loose">Your Profile</p>
+                </div>
               </div>
-            </div>
-          </NavLink>
+            </NavLink>
 
-          <div
-            className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer"
-            onClick={logOutHandeler}
-          >
-            <div className=" flex justify-center items-center gap-4 m-1">
-              <BiSolidLogOut className="text-2xl" />
-              <p className=" text-lg leading-loose">Log Out</p>
+            <div
+              className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer"
+              onClick={logOutHandeler}
+            >
+              <div className=" flex justify-center items-center gap-4 m-1">
+                <BiSolidLogOut className="text-2xl" />
+                <p className=" text-lg leading-loose">Log Out</p>
+              </div>
             </div>
           </div>
         </div>

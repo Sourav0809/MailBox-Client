@@ -30,7 +30,7 @@ const ProfileView = () => {
   const verifiedUser = userDetails.emailVerified;
 
   return (
-    <div className=" pl-[13em]">
+    <div className=" pl-2 md:pl-[13em]">
       <div className=" w-[95%] p-3  md:w-[45rem] border m-auto mt-[150px] text-center shadow-sm shadow-slate-600">
         <h2 className={`text-4xl text-blue-950 font-popins font-bold mt-6`}>
           Your Account
