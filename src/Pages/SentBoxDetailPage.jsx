@@ -20,7 +20,7 @@ const SentBoxDetailPage = () => {
   }, [filteredEmail]);
 
   return (
-    <div className=" pl-[13rem]">
+    <div className=" p-2  md:pl-[13rem]">
       <div className=" mt-16 w-[95%] min-[1600px]:w-[75rem] p-8 h-[80vh]  m-auto shadow-md shadow-slate-400 rounded-md">
         <div className=" flex flex-col gap-2 ">
           <div className=" bg-blue-300 p-2 rounded-md  flex items-center gap-2 font-semibold">
