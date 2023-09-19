@@ -8,7 +8,7 @@ import UserProfilePage from "../Pages/UserProfilePage";
 import ProfileViewPage from "../Pages/ProfileViewPage";
 import SentBoxPage from "../Pages/SentBoxPage";
 import InboxDetailPage from "../Pages/InboxDetailPage";
-import SentBoxDetailPage from "../Pages/sentBoxDetailPage";
+import SentBoxDetailPage from "../Pages/SentBoxDetailPage";
 const MyRoutes = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { userDetails } = useSelector((state) => state.userDetails);
