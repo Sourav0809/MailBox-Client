@@ -63,11 +63,15 @@ const Compose = () => {
         typedText: typedContent,
         htmlFormat: content,
       };
-      dispatch(storeEmailAction(submitedVal.email, senderEmail, submitedVal));
+      if (submitedVal.email === submitedVal.senderEmail) {
+        alert("Sender and Recipients must be different");
+      } else {
+        dispatch(storeEmailAction(submitedVal.email, senderEmail, submitedVal));
 
-      setEmail("");
-      setSubject("");
-      setContent("");
+        setEmail("");
+        setSubject("");
+        setContent("");
+      }
     } else {
       alert("Message Field cannot be blank");
     }
