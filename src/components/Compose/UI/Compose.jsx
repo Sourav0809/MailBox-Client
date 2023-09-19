@@ -15,18 +15,25 @@ const Compose = () => {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const typedVal = useRef(null);
+  const [speechRec, setSpeechRec] = useState(false);
   const senderEmail = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
   const { transcript, browserSupportsSpeechRecognition, resetTranscript } =
     useSpeechRecognition();
 
   if (!browserSupportsSpeechRecognition) {
-    return null;
+    return (
+      <p className=" mt-36 text-center text-4xl">
+        Your Browser Doesn't support speech recognition
+      </p>
+    );
   }
   const onStartListening = () => {
+    setSpeechRec(true);
     SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
   };
   const onStopListening = () => {
+    setSpeechRec(false);
     SpeechRecognition.stopListening();
     resetTranscript();
   };
@@ -110,18 +117,22 @@ const Compose = () => {
               >
                 {loader ? <BiLoaderCircle className=" text-2xl" /> : "Sent"}
               </button>
-              <button
-                onClick={onStartListening}
-                className=" bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
-              >
-                Start Speech To Text{" "}
-              </button>
-              <button
-                onClick={onStopListening}
-                className="bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
-              >
-                Stop Speech To Text
-              </button>
+              {!speechRec && (
+                <button
+                  onClick={onStartListening}
+                  className=" bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
+                >
+                  Start Speech To Text{" "}
+                </button>
+              )}
+              {speechRec && (
+                <button
+                  onClick={onStopListening}
+                  className="bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
+                >
+                  Stop Speech To Text
+                </button>
+              )}
             </div>
           </div>
         </form>

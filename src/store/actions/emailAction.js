@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 export const fetchInboxAction = () => {
     return async (dispatch, getState) => {
         const { email } = getState().auth
-        console.log('Hi')
+
         try {
             const { data } = await axios.get(`${getDataLink}/${formatEmail(email)}/inbox.json`)
             if (data) {
@@ -21,7 +21,7 @@ export const fetchInboxAction = () => {
                         ...data[id],
                     }
                 });
-                console.log('Hello ')
+
                 dispatch(setReceiveEmails(newObjArr.reverse()))
 
             }
