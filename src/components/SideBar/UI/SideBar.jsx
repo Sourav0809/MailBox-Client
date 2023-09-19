@@ -107,7 +107,7 @@ const SideBar = () => {
           </div>
         </div>
 
-        <div className=" pb-20 flex flex-col gap-1">
+        <div className=" pb-32 md:pb-20 flex flex-col gap-1">
           <NavLink to={"/profile"}>
             <div className=" flex justify-start items-center text-white bg-[rgb(47,47,61)] m-2 gap-2 px-5  cursor-pointer">
               <div className=" flex justify-center items-center gap-4 m-1">

@@ -21,6 +21,8 @@ const ProfileView = () => {
         requestType: "VERIFY_EMAIL",
         idToken: idToken,
       });
+
+      toast.success("Verification Link Sent On Your Email");
     } catch (error) {
       toast.error("Error Occurred !");
     }

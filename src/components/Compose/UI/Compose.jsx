@@ -80,7 +80,7 @@ const Compose = () => {
 
   return (
     <div className="md:pl-[13rem] p-3 ">
-      <div className=" w-full md:w-[50rem] md:p-0 p-4 m-auto mt-20 shadow-md shadow-slate-400">
+      <div className=" w-full md:w-[50rem] md:p-0 p-4 m-auto mt-20 md:mt-5 shadow-md shadow-slate-400">
         <form onSubmit={onSubmitHandeler} className=" p-3 mt-2">
           <h1 className=" font-popins text-base">New Message</h1>
           <div className=" flex flex-col gap-2 mt-2  ">
@@ -105,16 +105,16 @@ const Compose = () => {
               }}
             />
 
-            <div className=" mt-2 m-auto h-[30rem] p-1 w-[98%]">
+            <div className=" mt-2 m-auto h-[35rem] p-1 w-[98%]">
               <ReactQuill
                 theme="snow"
                 value={content}
                 onChange={setContent}
-                className="h-[90%]"
+                className="h-[80%]"
                 ref={typedVal}
               />
             </div>
-            <div className="px-3 flex items-center gap-2">
+            <div className="px-1 flex items-center gap-2">
               <button
                 type="submit"
                 className=" bg-blue-500 flex justify-center items-center text-white font-semibold p-2 px-7 rounded-md"
