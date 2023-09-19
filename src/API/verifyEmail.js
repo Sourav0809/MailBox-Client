@@ -1,0 +1,1 @@
+export const verifyEmailLink = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAaz4g50KoBspQajmaWMRlkrw372P1mT0o"

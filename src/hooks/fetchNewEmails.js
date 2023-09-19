@@ -4,7 +4,7 @@ import { fetchInboxAction } from "../store/actions/emailAction";
 const fetchNewEmails = () => {
     const dispatch = useDispatch()
 
-    return useEffect(() => {
+    useEffect(() => {
         const intervalId = setInterval(() => {
             dispatch(fetchInboxAction());
         }, 2000);
