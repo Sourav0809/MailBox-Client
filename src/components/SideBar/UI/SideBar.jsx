@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 const SideBar = () => {
   const dispatch = useDispatch();
   const { receiveEmails } = useSelector((state) => state.allEmails);
@@ -37,7 +37,7 @@ const SideBar = () => {
           </div>
         ) : (
           <div className="">
-            <BsFillArrowLeftCircleFill
+            <BsFillArrowLeftSquareFill
               className="text-5xl fixed top-5 left-[14rem] z-20"
               onClick={() => {
                 setDisplay("none");
