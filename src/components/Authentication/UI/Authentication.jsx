@@ -63,7 +63,6 @@ const Authentication = () => {
       if (email.trim() !== "" && password.trim() !== "") {
         try {
           const { data } = await axios.post(loginLink, submitedData);
-          console.log(data);
           dispatch(
             setAuthAction({ idToken: data.idToken, email: submitedData.email })
           );

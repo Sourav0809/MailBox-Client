@@ -8,12 +8,12 @@ import { useDispatch } from "react-redux";
 import { userDetailsSetAction } from "../../../store/actions/userDetailsAction";
 import { setUserDetails } from "../../../store/reducers/userProfileSlice";
 import PageLoader from "../../UI/PageLoader";
+import toast from "react-hot-toast";
 const UserProfile = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const { email } = useSelector((state) => state.auth);
   const [loader, setLoader] = useState(true);
-  console.log(loader);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const UserProfile = () => {
       );
       dispatch(setUserDetails(submitedData));
     } catch (error) {
-      console.log(error);
+      toast.error("Error Occurred ");
     }
   };
 

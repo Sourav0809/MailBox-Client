@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import Sent from "./UI/Sent";
 import EmptySentbox from "./UI/EmptySentbox";
+
 const SentContainer = () => {
   const { sentEmails } = useSelector((state) => state.allEmails);
   return (

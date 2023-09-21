@@ -85,7 +85,7 @@ export const storeEmailAction = (receiverEmail, senderEmail, submitedVal) => {
                 if (inboxResponse.data && sentResponse.data) {
                     const newSentEmail = { id: inboxResponse.data.name, ...submitedVal }
                     const OldSentEmails = getState().allEmails.sentEmails
-                    dispatch(setSentEmails([...OldSentEmails, newSentEmail,]))
+                    dispatch(setSentEmails([newSentEmail, ...OldSentEmails,]))
 
                     toast.success('Email Sent ')
                 }
